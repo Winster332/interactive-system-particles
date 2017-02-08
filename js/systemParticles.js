@@ -2,6 +2,11 @@ class SystemParticle {
 	constructor() {
 		this.particles = Array();
 		this.count = 0;
+		this.input = null;
+	}
+
+	setInput(input) {
+		this.input = input;
 	}
 
 	generate(x, y) {
@@ -10,7 +15,7 @@ class SystemParticle {
 				Math.random() * Math.PI/2, 
 				Math.random() * Math.PI/2);
 			var color = "#444";
-			var radius = 2;
+			var radius = 10;
 
 			this.addParticle(x, y, color, radius, vel.x, vel.y)
 		}
@@ -58,6 +63,17 @@ class SystemParticle {
 				this.particles[i].vy *= -1;
 			if (this.particles[i].y >= graphics.height)
 				this.particles[i].vy *= -1;
+
+			if (this.input != null) {
+				var distance = Math.sqrt(
+						Math.pow(this.particles[i].x - 
+							this.input.x,2) + 
+						Math.pow(this.particles[i].y - this.input.y,2));
+
+				if (distance < this.particles[i].radius) {
+					console.log("Test");
+				}
+			}
 
 			this.particles[i].draw(graphics);
 		}
